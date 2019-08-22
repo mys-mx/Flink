@@ -5,12 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import morgan.mu.sink.MongoDBsink;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
+import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.LocalStreamEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
-import scala.Tuple5;
+
 
 import java.util.Properties;
 
@@ -53,9 +54,9 @@ public class FlinkFromKafkaToMongodb {
                 String totalBox = jsonObject.getString("totalBox");
                 String queryDate = jsonObject.getString("queryDate");
                 String splitTotalBoxInfo = jsonObject.getString("splitTotalBoxInfo");
-                return Tuple5.apply(splitTotalBox, totalBoxInfo, totalBox, queryDate, splitTotalBoxInfo);
+                return Tuple5.of(splitTotalBox, totalBoxInfo, totalBox, queryDate, splitTotalBoxInfo);
             }
-        });
+        }).addSink(new MongoDBsink());
 
         env.execute("Flink Streaming Java API From Kafka To Mongodb");
     }
