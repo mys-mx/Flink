@@ -1,0 +1,44 @@
+#root日志
+log4j.rootLogger=INFO,stdout,info,warn,error
+
+#控制台日志
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.err
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d %-5p %c{1}:%L - %m%n
+
+#info级别日志
+log4j.appender.info=org.apache.log4j.RollingFileAppender
+log4j.appender.info.Threshold=INFO
+log4j.appender.info.File=../info.log
+log4j.appender.info.MaxFileSize=200MB
+log4j.appender.info.MaxBackupIndex=5
+log4j.appender.info.layout=org.apache.log4j.PatternLayout
+log4j.appender.info.layout.ConversionPattern=%d %-5p %l - %m%n
+log4j.appender.info.filter.infoFilter = org.apache.log4j.varia.LevelRangeFilter
+log4j.appender.info.filter.infoFilter.LevelMin=INFO
+log4j.appender.info.filter.infoFilter.LevelMax=INFO
+
+#warn级别日志
+log4j.appender.warn=org.apache.log4j.RollingFileAppender
+log4j.appender.warn.Threshold=WARN
+log4j.appender.warn.File=../warn.log
+log4j.appender.warn.MaxFileSize=200MB
+log4j.appender.warn.MaxBackupIndex=5
+log4j.appender.warn.layout=org.apache.log4j.PatternLayout
+log4j.appender.warn.layout.ConversionPattern=%d %-5p %l - %m%n
+log4j.appender.warn.filter.infoFilter = org.apache.log4j.varia.LevelRangeFilter
+log4j.appender.warn.filter.infoFilter.LevelMin=WARN
+log4j.appender.warn.filter.infoFilter.LevelMax=WARN
+
+#error级别日志
+log4j.appender.error=org.apache.log4j.RollingFileAppender
+log4j.appender.error.Threshold=ERROR
+log4j.appender.error.File=../error.log
+log4j.appender.error.MaxFileSize=200MB
+log4j.appender.error.MaxBackupIndex=5
+log4j.appender.error.layout=org.apache.log4j.PatternLayout
+log4j.appender.error.layout.ConversionPattern=%d %-5p %l - %m%n
+log4j.appender.error.filter.infoFilter = org.apache.log4j.varia.LevelRangeFilter
+log4j.appender.error.filter.infoFilter.LevelMin=ERROR
+log4j.appender.error.filter.infoFilter.LevelMax=ERROR
