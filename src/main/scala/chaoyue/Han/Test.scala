@@ -7,5 +7,9 @@ package chaoyue.Han
   * Date: 2019/8/22 20:04
   */
 object Test {
+  def main(args: Array[String]): Unit = {
+
+
+  }
 
 }
