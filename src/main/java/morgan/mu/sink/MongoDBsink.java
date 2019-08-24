@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @Title: MongoDBsink
- * @Description: java类作用描述
+ * @Description: 写数据到mongodb
  * @Author: YuSong.Mu
  * @Date: 2019/8/22 15:13
  */
@@ -40,6 +40,7 @@ public class MongoDBsink extends RichSinkFunction<Tuple5<String, String, String,
                 list.add(doc);
                 System.out.println("Insert Starting");
                 collection.insertMany(list);
+                System.out.println("---------成功写入mongodb--------");
             }
         } catch (Exception e) {
             e.printStackTrace();
