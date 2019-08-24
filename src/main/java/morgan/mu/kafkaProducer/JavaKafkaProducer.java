@@ -9,9 +9,9 @@ import java.util.Properties;
 public class JavaKafkaProducer {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        String topic = "test";
+        String topic = "test123";
 
         Properties props = new Properties();
         props.put("bootstrap.servers", "hdp-dn-01:9092,hdp-dn-02:9092,hdp-dn-03:9092");
@@ -23,16 +23,40 @@ public class JavaKafkaProducer {
         Producer<String, String> producer = new KafkaProducer<String, String>(props);
         while (true) {
 
-            producer.send(new ProducerRecord<String, String>(topic, "Hi"));
-
-            producer.send(new ProducerRecord<String, String>(topic, "Morgan"), new Callback() {
+            producer.send(new ProducerRecord<String, String>(topic, "{\"name\":\"LiMing\",\"age\":17,\"school\":\"北京大学\",\"subject\":\"bigdata\"}"), new Callback() {
                 @Override
-                public void onCompletion(RecordMetadata metadata, Exception e) {
-                    if (e != null) {
-                        e.printStackTrace();
-                    } else {
-                        System.out.println(metadata.toString());//org.apache.kafka.clients.producer.RecordMetadata@1d89e2b5
-                        System.out.println(metadata.offset());//1
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+                    if(exception!=null){
+                        exception.printStackTrace();
+                    }else {
+                        System.out.println(metadata.toString());
+                        System.out.println(metadata.offset());
+                    }
+                }
+            });
+
+            Thread.sleep(1000);
+            producer.send(new ProducerRecord<String, String>(topic, "{\"name\":\"XiaoHong\",\"age\":17,\"school\":\"河北北方学院南校区\",\"subject\":\"bigdata\"}"), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+                    if(exception!=null){
+                        exception.printStackTrace();
+                    }else {
+                        System.out.println(metadata.toString());
+                        System.out.println(metadata.offset());
+                    }
+                }
+            });
+            Thread.sleep(1000);
+
+            producer.send(new ProducerRecord<String, String>(topic, "{\"name\":\"DaZhuang\",\"age\":17,\"school\":\"清华大学\",\"subject\":\"bigdata\"}"), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata metadata, Exception exception) {
+                    if(exception!=null){
+                        exception.printStackTrace();
+                    }else {
+                        System.out.println(metadata.toString());
+                        System.out.println(metadata.offset());
                     }
                 }
             });
