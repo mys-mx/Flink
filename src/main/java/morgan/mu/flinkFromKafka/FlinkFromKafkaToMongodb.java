@@ -17,7 +17,7 @@ import java.util.Properties;
 
 /**
  * @Title: FlinkFromKafkaToMongodb
- * @Description: java类作用描述
+ * @Description: flink消费kafka数据到mongodb
  * @Author: YuSong.Mu
  * @Date: 2019/8/22 16:04
  */
@@ -31,6 +31,7 @@ public class FlinkFromKafkaToMongodb {
 
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         Properties properties = new Properties();
+
         properties.setProperty("bootstrap.servers", "dev-bigdata01.aiads-host.com:9092,dev-bigdata02.aiads-host.com:9092,dev-bigdata03.aiads-host.com:9092");
         properties.setProperty("group.id", "test4444");
 
