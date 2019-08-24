@@ -2,7 +2,7 @@ package morgan.mu.flinkFromKafka;
 
 /**
  * @Title: FilnkCostKafka
- * @Description: java类作用描述
+ * @Description: flink测试连接kafka
  * @Author: YuSong.Mu
  * @Date: 2019/5/15 10:01
  */
@@ -51,13 +51,24 @@ public class FilnkCostKafka {
                 new SimpleStringSchema(), properties);
 
 
-        getKafkaConsumerOffset(myConsumer);
+//        getKafkaConsumerOffset(myConsumer);
 
         DataStream<String> keyedStream = env.addSource(myConsumer);
         System.out.println("2222222222222");
 
 
-        keyedStream.print();
+        keyedStream.map(new MapFunction<String, Map<String,Object>>() {
+            @Override
+            public Map<String, Object> map(String json) throws Exception {
+                Map<String, Object> stringObjectHashMap = new HashMap<>();
+                JSONObject jsonObject = JSON.parseObject(json);
+                stringObjectHashMap.put("name",jsonObject.getString("name"));
+                stringObjectHashMap.put("age",jsonObject.getInteger("age"));
+                stringObjectHashMap.put("school",jsonObject.getString("school"));
+                stringObjectHashMap.put("subject",jsonObject.getString("subject"));
+                return stringObjectHashMap;
+            }
+        }).print();
 
 
         System.out.println("3333333333333");
