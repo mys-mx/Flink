@@ -43,11 +43,11 @@ public class FilnkCostKafka {
 //        env.setStartFromEarliest();
         Properties properties = new Properties();
         //kafka的节点的IP或者hostName，多个使用逗号分隔
-        properties.setProperty("bootstrap.servers", "");
+        properties.setProperty("bootstrap.servers", "hdp-dn-01:9092,hdp-dn-02:9092,hdp-dn-03:9092");
         //zookeeper的节点的IP或者hostName，多个使用逗号进行分隔
-        properties.setProperty("group.id", "test4444");
+        properties.setProperty("group.id", "test");
         System.out.println("11111111111");
-        FlinkKafkaConsumer010<String> myConsumer = new FlinkKafkaConsumer010<String>("",
+        FlinkKafkaConsumer010<String> myConsumer = new FlinkKafkaConsumer010<String>("test",
                 new SimpleStringSchema(), properties);
 
 
@@ -57,17 +57,7 @@ public class FilnkCostKafka {
         System.out.println("2222222222222");
 
 
-        SingleOutputStreamOperator<Map<String, String>> map = keyedStream.map(new MapFunction<String, Map<String, String>>() {
-            @Override
-            public Map<String, String> map(String value) throws Exception {
-                Map<String, String> stringStringHashMap = new HashMap<>();
-                JSONObject jsonObject = JSON.parseObject(value);
-                String cid = jsonObject.getString("cid");
-                String text = jsonObject.getString("text");
-                stringStringHashMap.put(cid, text);
-                return stringStringHashMap;
-            }
-        });
+        keyedStream.print();
 
 
         System.out.println("3333333333333");
