@@ -6,3 +6,12 @@
 # 开发项目
 ****java****  flink-kafka-mongo  
 ****java****  kafka-producer
+
+
+
+
+
+
+
+#注意
+5.7及以上的mysql驱动是com.mysql.cj.jdbc.Driver
