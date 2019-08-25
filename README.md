@@ -5,7 +5,9 @@
 ****kafka 0.10****  
 # 开发项目
 ****java****  flink-kafka-mongo  
-****java****  kafka-producer
+****java****  flink-kafka-mysql   
+****java****  kafka-producer  
+****java****  kafka-kafka-ElasticSearch
 
 
 
