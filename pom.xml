@@ -136,6 +136,18 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.10.1</version>
         </dependency>
+        <!--******************* flink-elasticsearch *******************-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
