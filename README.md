@@ -3,6 +3,8 @@
 ****scala 2.11****   
 ****java 1.8****  
 ****kafka 0.10****  
+****mysql 5.1****  
+****ElasticSearch 6.3.1****  
 # 开发项目
 ****java****  flink-kafka-mongo  
 ****java****  flink-kafka-mysql   
