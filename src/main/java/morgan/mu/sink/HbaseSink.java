@@ -1,48 +1,64 @@
 package morgan.mu.sink;
 
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hbase.HBaseConfiguration;
+
+import morgan.mu.util.HBaseDriverManager;
+import morgan.mu.util.HBaseUtil;
+import org.apache.flink.api.common.io.OutputFormat;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.configuration.Configuration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class HbaseSink implements SinkFunction<String> {
+import java.io.IOException;
+
+public class HbaseSink implements OutputFormat<Tuple2<String, String>> {
+    private static final Logger logger = LoggerFactory.getLogger(HbaseSink.class);
+
+    private org.apache.hadoop.conf.Configuration conf = null;
+    private Connection conn = null;
+    private Table table = null;
+
     @Override
-    public void invoke(String value, Context context) throws Exception {
-        Connection connection = null;
-        Table table = null;
+    public void configure(Configuration parameters) {
+
+    }
+
+    @Override
+    public void open(int taskNumber, int numTasks) throws IOException {
+        conn = HBaseDriverManager.getConnection();
+        table = conn.getTable(TableName.valueOf("classes"));
+    }
+
+    @Override
+    public void writeRecord(Tuple2<String, String> record) throws IOException {
+        String[] field = {
+                "totalBoxUnitInfo", "splitTotalBox"
+        };
+
+        String[] value = {
+                record.f0, record.f1
+        };
         try {
-            // 加载HBase的配置
-            Configuration configuration = HBaseConfiguration.create();
-
-            // 读取配置文件
-            configuration.addResource(new Path(ClassLoader.getSystemResource("hbase-site.xml").toURI()));
-            configuration.addResource(new Path(ClassLoader.getSystemResource("core-site.xml").toURI()));
-            connection = ConnectionFactory.createConnection(configuration);
-
-            TableName tableName = TableName.valueOf("test");
-
-            // 获取表对象
-            table = connection.getTable(tableName);
-
-            //row1:cf:a:aaa
-            String[] split = value.split(":");
-
-            // 创建一个put请求，用于添加数据或者更新数据
-            Put put = new Put(Bytes.toBytes(split[0]));
-            put.addColumn(Bytes.toBytes(split[1]), Bytes.toBytes(split[2]), Bytes.toBytes(split[3]));
-            table.put(put);
-
+            HBaseUtil.putToHBase(table, "0001", "user", field, value);
+            System.out.println("-------成功写入hbase-------");
         } catch (Exception e) {
-
-        } finally {
-            if (null != table) table.close();
-            if (null != connection) connection.close();
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (table != null) {
+            table.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+
     }
 }
