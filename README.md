@@ -9,7 +9,7 @@
 ****java****  flink-kafka-mongo  
 ****java****  flink-kafka-mysql   
 ****java****  kafka-producer  
-****java****  kafka-kafka-ElasticSearch
+****java****  kafka-kafka-ElasticSearch  
 ****java****  kafka-kafka-hbase
 
 
