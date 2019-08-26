@@ -24,7 +24,7 @@ public class ProConfig implements Serializable {
         InputStream configStream = null;
         properties = new Properties();
         try {
-            configStream = JdbcUtils.class.getResourceAsStream("/pro/pro.properties");
+            configStream = JdbcUtils.class.getResourceAsStream("/pro.properties");
             properties.load(configStream);
         } catch (Exception pe) {
             logger.error("### load datasource config failed ###", pe);
