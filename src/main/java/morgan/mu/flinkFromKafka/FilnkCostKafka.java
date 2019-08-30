@@ -86,6 +86,10 @@ public class FilnkCostKafka {
      */
     private static void getKafkaConsumerOffset(FlinkKafkaConsumer010<String> myConsumer) {
         Map<KafkaTopicPartition, Long> kafkaTopicPartitionLongHashMap = new HashMap<>();
+        myConsumer.setStartFromEarliest(); // - 从最早的记录开始；
+        myConsumer.setStartFromLatest(); //- 从最新记录开始；
+        myConsumer.setStartFromTimestamp(0L); // 从指定的epoch时间戳（毫秒）开始；
+        myConsumer.setStartFromGroupOffsets(); // 默认行为，从上次消费的偏移量进行继续消费。
 
         kafkaTopicPartitionLongHashMap.put(new KafkaTopicPartition("", 0), 10L);
         kafkaTopicPartitionLongHashMap.put(new KafkaTopicPartition("", 0), 12L);
