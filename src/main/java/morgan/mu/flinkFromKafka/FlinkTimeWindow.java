@@ -37,9 +37,9 @@ public class FlinkTimeWindow {
 
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", "hdp-dn-01:9092,hdp-dn-02:9092,hdp-dn-03:9092");
-        properties.setProperty("group.id", "flink_window");
+        properties.setProperty("group.id", "flink_kafka");
 
-        FlinkKafkaConsumer010<ObjectNode> objectNodeFlinkKafkaConsumer010 = new FlinkKafkaConsumer010<>("flink_time_window_test1" ,
+        FlinkKafkaConsumer010<ObjectNode> objectNodeFlinkKafkaConsumer010 = new FlinkKafkaConsumer010<ObjectNode>("flink_kafka" ,
                 new JSONKeyValueDeserializationSchema(false), properties);
 
         DataStreamSource<ObjectNode> myConsumer = env.addSource(objectNodeFlinkKafkaConsumer010);
@@ -56,15 +56,16 @@ public class FlinkTimeWindow {
 
 
         KeyedStream<Tuple2<String, Long>, Tuple> tuple2TupleKeyedStream = myFlinkWindow.map(new MapFunction<ObjectNode, Tuple2<String, Long>>() {
-            @Override
+
+//            @Override
             public Tuple2<String, Long> map(ObjectNode jsonNodes) throws Exception {
-                return Tuple2.of(jsonNodes.get("value").get("name").textValue(),
+                return Tuple2.of(jsonNodes.get("value").get("time").longValue()+"",
                         1l);
             }
         }).keyBy(0);
 
         //每隔1秒算过去3秒的数据
-        tuple2TupleKeyedStream.timeWindow(Time.seconds(3),Time.seconds(1)).sum(1).print();
+        tuple2TupleKeyedStream.timeWindow(Time.seconds(1),Time.seconds(3)).sum(1).print();
         env.execute("flink stream word count");
 
     }

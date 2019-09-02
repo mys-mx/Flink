@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class HbaseSink implements OutputFormat<Tuple2<String, String>> {
+public class
+HbaseSink implements OutputFormat<Tuple2<String, String>> {
     private static final Logger logger = LoggerFactory.getLogger(HbaseSink.class);
 
     private org.apache.hadoop.conf.Configuration conf = null;
