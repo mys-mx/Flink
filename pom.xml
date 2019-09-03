@@ -163,16 +163,30 @@
 
     <build>
         <plugins>
+            <!-- 指定 编译java的插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+            </plugin>
+
+            <!-- 指定编译scala的插件 -->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>3.4.6</version>
                 <executions>
                     <execution>
-                        <!-- 声明绑定到maven的compile阶段 -->
                         <goals>
+                            <goal>compile</goal>
                             <goal>testCompile</goal>
                         </goals>
+                        <configuration>
+                            <args>
+                                <arg>-dependencyfile</arg>
+                                <arg>${project.build.directory}/.scala_dependencies</arg>
+                            </args>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
