@@ -65,7 +65,7 @@ public class FlinkTimeWindow {
         }).keyBy(0);
 
         //每隔1秒算过去3秒的数据
-        tuple2TupleKeyedStream.timeWindow(Time.seconds(1),Time.seconds(3)).sum(1).print();
+        tuple2TupleKeyedStream.timeWindow(Time.seconds(3),Time.seconds(1)).sum(1).print();
         env.execute("flink stream word count");
 
     }
