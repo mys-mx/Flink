@@ -10,7 +10,8 @@
 ****java****  flink-kafka-mysql   
 ****java****  kafka-producer  
 ****java****  kafka-kafka-ElasticSearch  
-****java****  kafka-kafka-hbase
+****java****  kafka-kafka-hbase  
+****scala****  flink分流操作
 
 
 
