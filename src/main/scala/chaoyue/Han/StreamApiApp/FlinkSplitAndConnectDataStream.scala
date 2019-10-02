@@ -6,7 +6,7 @@ import org.apache.flink.streaming.api.scala._
 
 
 /**
-  * flink 分流操作
+  * flink 分流操作  和多流join操作
   */
 object FlinkSplitDataStream {
 
@@ -36,8 +36,24 @@ object FlinkSplitDataStream {
     val result: DataStream[StrTuple] = splitStream.select("xiaoxuesheng")
     val result1: DataStream[StrTuple] = splitStream.select("daxuesheng")
 
-    result.print("xiaoxuesheng")
-    result1.print("daxuesheng")
+    //result.print("xiaoxuesheng")
+    //result1.print("daxuesheng")
+
+    /**
+      * 双流join
+      */
+    /*val connStream: ConnectedStreams[StrTuple, StrTuple] = result.connect(result1)
+
+    connStream.map(
+      (strTuplelog:StrTuple)=>strTuplelog.name,
+      (strTuplelog1:StrTuple)=>strTuplelog1.name
+    ).print("join")
+*/
+    /**
+      * 多流join
+      */
+
+    result.union(result1).print("sum join")
 
     env.execute("flink stream")
   }
