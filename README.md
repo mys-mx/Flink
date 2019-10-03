@@ -9,15 +9,7 @@
 ****java****  flink-kafka-mongo  
 ****java****  flink-kafka-mysql   
 ****java****  kafka-producer  
-****java****  kafka-kafka-ElasticSearch  
-****java****  kafka-kafka-hbase  
-****scala****  flink分流操作
-
-
-
-
-
-
-
-#注意  
-5.7及以上的mysql驱动是com.mysql.cj.jdbc.Driver
+****java****  flink-kafka-ElasticSearch  
+****java****  flink-kafka-hbase  
+****java****  flink-kafka-redis  
+****scala**** flink-split-connect(多流join)
