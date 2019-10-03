@@ -158,6 +158,13 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.7</version>
         </dependency>
+        <!--******************* flink-redis *******************-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-redis_2.10</artifactId>
+            <version>1.1.5</version>
+        </dependency>
+
 
     </dependencies>
 
